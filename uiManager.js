@@ -82,6 +82,23 @@ export class UIManager {
         roomManagementContainer.appendChild(importButton);
         roomManagementContainer.appendChild(galleryButton);
 
+        // Add visualization mode toggle
+        const visualizationPanel = document.createElement('div');
+        visualizationPanel.style.marginTop = '10px';
+        visualizationPanel.style.borderTop = '1px solid #666';
+        visualizationPanel.style.paddingTop = '5px';
+
+        const visualizationToggle = document.createElement('button');
+        visualizationToggle.textContent = 'Toggle Visualization Mode';
+        visualizationToggle.onclick = () => {
+            if (window.game && window.game.worldManager) {
+                const roomGenerator = window.game.worldManager.roomGenerator;
+                roomGenerator.visualizationMode = !roomGenerator.visualizationMode;
+                this.showNotification(`Visualization mode ${roomGenerator.visualizationMode ? 'enabled' : 'disabled'}`, 'info');
+            }
+        };
+        visualizationPanel.appendChild(visualizationToggle);
+
         // Debug buttons moved inside panel
         const debugPanel = document.createElement('div');
         debugPanel.style.marginTop = '10px';
@@ -119,6 +136,8 @@ export class UIManager {
         };
         debugPanel.appendChild(portalButton);
 
+        // Add visualization panel before the room management panel
+        roomManagementContainer.appendChild(visualizationPanel);
         roomManagementContainer.appendChild(debugPanel);
 
         // Player status moved inside panel
